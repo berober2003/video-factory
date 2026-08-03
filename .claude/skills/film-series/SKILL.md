@@ -29,7 +29,11 @@ new ones — every mechanic below is demonstrated there.
    narratively, not just mechanically.
 4. **Web playback is double-buffered.** Copy `player/player-template.html`:
    two stacked muted `<video>` elements, the hidden one preloads the next
-   film, swap on `ended`, clickable stage rail for random access.
+   film, swap on `ended`, clickable stage rail for random access. Two rules
+   the template already encodes — keep them when adapting: no `autoplay`
+   attribute on either element (start with an explicit `.play()`), and the
+   `ended` handler must ignore the hidden buffer. Break either and the
+   invisible preload plays to its end and silently skips a stage.
 
 ## Building a new series
 
