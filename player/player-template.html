@@ -37,7 +37,12 @@
 <body>
 <div class="wrap">
   <div class="vidframe">
-    <video id="filmA" autoplay muted playsinline preload="auto" aria-label="Chained film series"></video>
+    <!-- No `autoplay` attribute on either element: when a buffer rotates into
+         the hidden preload slot, a new src would re-trigger autoplay, the
+         invisible film would play to its end, and its `ended` event would
+         advance the chain a second time — silently skipping a stage. Initial
+         playback starts with an explicit .play() in the script instead. -->
+    <video id="filmA" muted playsinline preload="auto" aria-label="Chained film series"></video>
     <video id="filmB" muted playsinline preload="auto" class="hidden" aria-hidden="true"></video>
   </div>
   <div class="filmrail" id="filmrail" role="tablist" aria-label="Stages"></div>
@@ -85,7 +90,11 @@
     markActive(i);
     setTimeout(() => preloadNext(i), 400);
   }
-  vids.forEach((v) => v.addEventListener("ended", () => show((idx + 1) % FILMS.length, false)));
+  vids.forEach((v) => v.addEventListener("ended", () => {
+    // the hidden preload buffer can also fire `ended` — never advance on it
+    if (v.classList.contains("hidden")) return;
+    show((idx + 1) % FILMS.length, false);
+  }));
 
   vids[front].src = BASE + FILMS[0].file;
   const boot = vids[front].play();
