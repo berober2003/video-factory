@@ -13,7 +13,10 @@ Two things live here:
    multi-stage process into chained short films that play as one continuous
    machine, with a written deep-dive page pattern to ship them on.
 
-![Demo series frame](docs/demo-poster.png)
+![The demo series cycling — three films, one shared chrome, gapless cuts](docs/demo.gif)
+
+*The 3-film demo series at 3× speed: the stage rail advances while everything
+else holds its ground — that's the shared-chrome mechanic doing its job.*
 
 ## Quick start
 
